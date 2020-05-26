@@ -15,6 +15,18 @@ const createURL = (longitude, latitude, distance) => {
         return url
 }
 
+const getClampRecords = (url, apiToken) => {
+    $.ajax({
+        type: "GET",
+        url: url,
+        headers:{
+            Authorization: apiToken
+        }
+    }).done(function (data) {
+        return data;
+    });
+}
+
 export {
     getDistanse,
     createURL

@@ -2,7 +2,11 @@ import React, { Component } from 'react'
 import { Map, TileLayer } from 'react-leaflet'
 import ClampMarker from './marker'
 import {getDistanse, createURL} from "./utils"
+
+export let clamps = [];
+export let apiToken = "";
 export default class SimpleExample extends Component {
+
     //マップの描画範囲が変わったときの処理
     handleMoveEnd = event => {
         const map = event.target // 地図
@@ -19,10 +23,12 @@ export default class SimpleExample extends Component {
         console.log(url);
         // //プロット済みのマーカーをいったん削除
         // map.removeLayer(clamp_layer);
-        // //クランプ一覧も初期化
-        // clamps=[]
+        //クランプ一覧も初期化
+        clamps=[]
         // //新しい条件でデータをもらいプロットする
-        // plotClamps(url)
+        tmp = plotClamps(url, apiToken)
+        console.log(tmp);
+        
     }
 
     render() {
