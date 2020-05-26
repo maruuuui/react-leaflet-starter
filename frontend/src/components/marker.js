@@ -4,12 +4,12 @@ import { Marker, Popup } from 'react-leaflet'
 export default class SimpleExample extends Component {
     handleMouseover = event => {
         //ピンにポインタが触れたときの処理
-        const { lat, lng } = event.latlng
-        console.log(`Clicked at ${lat}, ${lng}`)
+        //ポップアップを開く
         event.target.openPopup();
     }
     handleClick = event => {
         //ピンがクリックされたときの処理
+        //ポップアップを開き、自身の推論結果の詳細情報を左のタブに表示する
         alert("")
         event.target.openPopup();
     }
