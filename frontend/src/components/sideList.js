@@ -7,9 +7,12 @@ export default class SimpleExample extends Component {
     render() {
         return (
             <table>
-                <tr>
-                    <td>aa</td>
-                </tr>
+                <tbody>
+
+                    <tr>
+                        <td>aa</td>
+                    </tr>
+                </tbody>
             </table>
         )
     }
