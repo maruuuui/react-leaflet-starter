@@ -1,5 +1,7 @@
 import React, { Component } from 'react'
 
+import PhotoListContent from "./photoListContent"
+
 export default class SimpleExample extends Component {
 
     funcA = () => {
@@ -15,14 +17,23 @@ export default class SimpleExample extends Component {
     }
 
     render() {
-        return (
-            <table>
-                <tbody>
+        const clamps = this.props.clamps
+        
+        const listItems = clamps.map((clamp, index) =>
+        <PhotoListContent 
+            photoInfo={clamp} 
+            clampIndex={index} 
+            key={clamp.id} 
+            showDetailFunc={this.props.showDetailFunc}
+        />
+        );
 
-                    <tr>
-                        <td>aa</td>
-                    </tr>
-                </tbody>
+
+        return (
+            <table className="table is-fullwidth">
+
+
+                    {listItems}
             </table>
         )
     }

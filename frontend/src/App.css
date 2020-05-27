@@ -16,9 +16,19 @@
   font-size: calc(10px + 2vmin);
   color: white;
 }
-
-.App-link {
-  color: #61dafb;
+header.background{
+  background-color: lightgray;
+}
+h1.margin{
+  margin-bottom: 0!important;
+}
+a.style{
+  font-size: 1.2em;
+  
+}
+a:hover{
+  color: white!important;
+  background: gray;
 }
 
 .mainStyle {

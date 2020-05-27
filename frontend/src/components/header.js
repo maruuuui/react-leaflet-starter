@@ -1,15 +1,15 @@
 import React, { Component } from 'react'
-import { Map, TileLayer, Marker, Popup } from 'react-leaflet'
 
 export default class SimpleExample extends Component {
 
 
     render() {
         return (
-            <header class="colimn background">
-                <h1>title</h1>
-                <a>assasa</a>
-                <a>assasa</a>
+            <header className="colimn background">
+                <h1 className="title margin">放電クランプ動作状況判定AI 解析結果表示</h1>
+                <br/>
+                <a href="" className="style">画像アップロード画面</a>
+                <a href="" className="style">解析結果表示画面</a>
             </header>
         )
     }
