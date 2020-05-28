@@ -35,3 +35,26 @@ a:hover{
   height: 100%;
   margin-top: 0;
 };
+
+
+.popup-menu-container {
+  position: relative;
+}
+
+.popup-menu {
+  position: absolute;
+  z-index: 2;
+  transform: scale(0);
+  transform-origin: top left;
+  
+  width: 30rem;
+  margin-top: 0.5rem;
+  padding: 1rem;
+  background: #fff;
+  border-radius: 0.5rem;
+  
+  transition: transform 0.2s;
+}
+.popup-menu.shown {
+  transform: scale(1);
+}

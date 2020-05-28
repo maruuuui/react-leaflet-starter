@@ -1,14 +1,38 @@
 import React, { Component } from 'react'
 
-import { getPhotoUrl } from "../utils"
+import { getPhotoUrl, countClamps, deleteClampRecord } from "../utils"
+
 export default class SimpleExample extends Component {
+    constructor(props){
+        super(props)
+        // this.setLeafletElement = this.setLeafletElement.bind(this)
+
+        this.state={
+            photoId : props.photoInfo.id,
+            showListFunc: props.showListFunc
+        }
+    }
+
+    onDeleteButtonClick = (event) => {
+        let do_delete = window.confirm("本当に削除しますか？")
+        if(!do_delete){
+            return;
+        }
+
+        deleteClampRecord(this.state.photoId)
+
+        //
+        this.state.showListFunc()
+    }
 
     render() {
         const photoInfo = this.props.photoInfo
         const showListFunc = this.props.showListFunc
         const photoUrl = getPhotoUrl(photoInfo)
         const memo = "memo"
-        const inferenceStatus = "status"
+        const inferenceStatus = countClamps(photoInfo)
+
+        const clampDetails = <a>sasadsad</a>
         return (
             <div>
                 <button 
@@ -60,10 +84,17 @@ export default class SimpleExample extends Component {
                         </tr>
                         <tr>
                             <td>解析結果</td>
-                            <td>{photoInfo.inference_status}</td>
+                            <td>{inferenceStatus}</td>
                         </tr>
                     </tbody>
                 </table>
+                {clampDetails}
+                <button
+                    className="button is-danger is-small is-fullwidth"
+                    onClick={this.onDeleteButtonClick}
+                >
+                    <small>データ削除</small>
+                </button>
             </div>
         )
     }

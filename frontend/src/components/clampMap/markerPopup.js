@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { Popup } from 'react-leaflet'
 
-import {getPhotoUrl, countClamps, countOperatedClamps} from "./utils"
+import {getPhotoUrl, countClamps, countOperatedClamps} from "../utils"
 
 export default class SimpleExample extends Component {
 

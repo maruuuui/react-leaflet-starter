@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { Map, TileLayer } from 'react-leaflet'
 // import ClampMarker from './marker'
 import ClampMarkerList from './markerList'
-import { getDistanse, createURL, getClampRecords } from "./utils"
+import { getDistanse, createURL, getClampRecords } from "../utils"
 
 export let apiToken = "";
 export default class SimpleExample extends Component {
@@ -41,7 +41,7 @@ export default class SimpleExample extends Component {
                 <ClampMarkerList 
                     clamps={this.props.clamps} 
                     pushMarkerElementFunc={this.props.pushMarkerElementFunc}
-                    PopupMarkerIndex={this.props.PopupMarkerIndex}
+                    openSideMenuFunc={this.props.openSideMenuFunc}
                 />
             </Map >
         )

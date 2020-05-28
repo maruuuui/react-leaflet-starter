@@ -1,5 +1,5 @@
 import axios from "axios";
-
+import {apiUrl} from "../App"
 //画面に表示されている範囲(中心から四隅までの距離)を取得する関数
 const getDistanse = map => {
     //中心座標を取得
@@ -12,7 +12,7 @@ const getDistanse = map => {
 }
 // 放電クランプAPIから解析結果を取得するためのurlを作成する
 const createURL = (longitude, latitude, distance) => {
-    let url = "http://localhost:8000/api/v1/clampphoto/" + "?point=" + String(longitude) + "," + String(latitude) + "&dist=" + String(distance)
+    let url = apiUrl + "?point=" + String(longitude) + "," + String(latitude) + "&dist=" + String(distance)
     console.log(url)
     return url
 }
@@ -23,15 +23,29 @@ const getClampRecords = async (url, apiToken) => {
     await axios.get(url)
         .then(function (data) {
             response = data.data
-            // for (var i = 0; i < response.data.results.length; i++) {
-            //   self.image_items.push(response.data.results[i]);
-            // }
         })
         .catch(function (error) {
             console.log(error);
         });
     return response
+}
 
+//クランプ情報削除ボタンが押された時の処理
+const deleteClampRecord = async (clampId, apiToken) => {
+    // 確認ダイアログを表示し、OKならDELETEリクエストを投げる
+
+
+
+    let response = "default";
+    const url = apiUrl + clampId
+    await axios.delete(url)
+        .then(function (data) {
+            response = data.data
+        })
+        .catch(function (error) {
+            console.log(error);
+        });
+    return response
 }
 //1枚の画像の解析結果からその解析状況に応じた画像URLを返す
 const getPhotoUrl = clampInfo => {
@@ -90,37 +104,9 @@ export {
     getDistanse,
     createURL,
     getClampRecords,
+    deleteClampRecord,
     getPhotoUrl,
     countClamps,
     countOperatedClamps,
     getMemo
 }
-
-// createClampListContent = (clampListInfo) => {
-//     let clamp_summaries = [] //各クランプ写真の情報のリスト
-
-//     let clamp_summary = {} //各クランプ写真の情報
-//     let photo_url = photo_detail.source_image_for_view_url;//写真のURL(解析済みなら検出された矩形が描画された画像、未解析なら元画像)
-//     let inference_status = "未解析"//解析結果
-
-//     if(photo_detail.inference_result.length > 0){
-//         //解析結果が存在する場合
-//         let latest_index = photo_detail.inference_result.length - 1;
-//         let latest_inference = photo_detail.inference_result[latest_index];
-        
-//         photo_url = latest_inference.overlayed_image_url;//写真のURLに最新の矩形が描画された画像を設定
-//         inference_status=`解析済み (クランプ${latest_inference.inferenced_clamps.length}個)`
-//     }
-//     else if(photo_detail.inference_attempts >=1 && photo_detail.inference_attempts <=3){
-//         inference_status="解析待ち"
-//     }
-//     else if(photo_detail.inference_attempts > 3){
-//         inference_status="解析失敗"
-//     }
-
-//     clamp_summary["photo_url"]=photo_url
-//     clamp_summary["memo"] = photo_detail.memo//メモ
-//     clamp_summary["inference_status"]=inference_status
-//     clamp_summaries.push(clamp_summary)
-//     return photo_url
-// }

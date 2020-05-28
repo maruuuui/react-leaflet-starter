@@ -7,14 +7,15 @@ import './App.sass';
 import 'leaflet/dist/leaflet.css';
 
 import Header from './components/header'
-import ClampMap from './components/clampMap'
+import ClampMap from './components/clampMap/clampMap'
 import PhotoList from './components/sideMenu/photoList'
 import PhotoDetail from './components/sideMenu/photoDetail'
+// import Popup from './components/ImagePopup/imagePopupMenu'
 
 Leaflet.Icon.Default.imagePath =
   '//cdnjs.cloudflare.com/ajax/libs/leaflet/1.3.1/images/'
 
-// export const clampMarkers = []
+export const apiUrl = "http://localhost:8000/api/v1/clampphoto/"
 class App extends Component {
 
   state = {
@@ -25,12 +26,13 @@ class App extends Component {
     clampMarkers:[],
     sideMenu: "photoList",
     photoToBeShown: null,
-    PopupMarkerIndex: null
+    showPopup: false
   }
   clampsStateChange = newClamps => {
     this.setState({clamps:newClamps})
   }
 
+  // react-leafretによって作られたマーカーをstateに保管する関数
   pushMarkerElementFunc = newMarkers => {
     //setState()を呼ぶと画面が再描画されてしまうため直接代入する
     this.state.clampMarkers.push(newMarkers)
@@ -38,19 +40,16 @@ class App extends Component {
 
   // サイドメニューに表示する項目を指定された写真の詳細に切り替える
   sideMenuStateChangeToPhotoDetail = (index) => {
-    // this.state.clampMarkers[index].openPopup()
-    // console.log(this.state.clampMarkers[index]);
-    // console.log(typeof(this.state.clampMarkers[index]));
     const photoToBeShown = this.state.clamps[index]
     const markerElement = this.state.clampMarkers[index]
 
     console.log(this.state.clampMarkers)
+    console.log(index)
     markerElement.openPopup()
 
     this.setState({
       sideMenu:"photoDetail",
       photoToBeShown: photoToBeShown,
-      PopupMarkerIndex: index
     })
   }
   // サイドメニューに表示する項目を写真一覧に切り替える
@@ -58,7 +57,16 @@ class App extends Component {
     this.setState({sideMenu:"photoList"})
   }
 
+  // 画像アップロード用ポップアップメニューの表示状態を切り替える関数
+  togglePopup() {
+    console.log("toggle")
+    this.setState({
+      showPopup: !this.state.showPopup
+    });
+  }
+
   render() {
+    // const togglePopupButton = 
     const position = [this.state.lat, this.state.lng];
     const sideListContent = (this.state.sideMenu === "photoList") 
     ? <PhotoList 
@@ -86,7 +94,7 @@ class App extends Component {
               clamps={this.state.clamps} 
               setClampsFunc={this.clampsStateChange} 
               pushMarkerElementFunc={this.pushMarkerElementFunc} 
-              PopupMarkerIndex={this.state}
+              openSideMenuFunc={this.sideMenuStateChangeToPhotoDetail}
             />
           </Columns.Column>
         </Columns>

@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { Marker } from 'react-leaflet'
 
-import ClampPopup from "./popup"
+import ClampPopup from "./markerPopup"
 export default class SimpleExample extends Component {
     constructor(props){
         super(props)
@@ -9,22 +9,23 @@ export default class SimpleExample extends Component {
 
         this.state={
             markerElement : null,
-            pushMarkerElementFunc : props.pushMarkerElementFunc
+            clampIndex: props.clampIndex,
+            pushMarkerElementFunc : props.pushMarkerElementFunc,
+            openSideMenuFunc: props.openSideMenuFunc
         }
     }
     
     
+    //ピンにポインタが触れたときの処理
     handleMouseover = event => {
-        //ピンにポインタが触れたときの処理
         //ポップアップを開く
-        console.log(event.target)
-        console.log(typeof(event.target));
         event.target.openPopup();
     }
+    //ピンがクリックされたときの処理
     handleClick = event => {
-        //ピンがクリックされたときの処理
         //ポップアップを開き、自身の推論結果の詳細情報を左のタブに表示する
-        event.target.openPopup();
+        // event.target.openPopup();
+        this.state.openSideMenuFunc(this.state.clampIndex)
     }
 
     setLeafletElement(marker) {
@@ -40,7 +41,6 @@ export default class SimpleExample extends Component {
 
     render() {
         const clampData = this.props.clampData
-        const PopupMarkerIndex = this.props.PopupMarkerIndex
         const popup = <ClampPopup clampMarkerInfo={clampData} />
 
         return (
